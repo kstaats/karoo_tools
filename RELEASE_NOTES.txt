@@ -1,3 +1,15 @@
+2018 03/26
+
+Spent the better part of today working throgh my archive of working but could-be-better tools, giving them the final
+touches to bring them into the Karoo family. Now each has a proper old-school-is-cool banner, nearly identical code
+flow, and for the most part, similar naming scheme for the variables. This creates some familiarity to the total
+package such that if you dive into one, modifying it for your own local needs, it will be easy to do so again with
+the next.
+
+I have yet to upload the karoo_pipeline as I have one more modification to take it out of its LIGO foundation and
+into a more generic functionality.
+
+
 2018 03/25
 
 No notes just yet, sorry :(
