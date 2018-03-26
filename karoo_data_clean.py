@@ -1,6 +1,7 @@
 # Karoo Data Clean
 # by Kai Staats, MSc
-# version 0.3
+# see LICENSE.md
+# version 2018 03/26
 
 import os
 import sys
@@ -9,19 +10,22 @@ import numpy as np
 np.set_printoptions(linewidth = 320) # set the terminal to print 320 characters before line-wrapping in order to view Trees
 
 '''
-CLEAN COLUMN
-This script loads a .csv dataset which is assumed to have both a header and right-most labels (solutions) column, both 
-of which are preserved. You provide the value you seek to remove from the dataset, and the threshhold (quantity) which 
-should invoke the removal. A '0' threshold removes an entire column if even just one instance of the value is found 
-while a '100' threshold removes the column only if every single row contains the given value.
+This script loads a .csv dataset which is assumed to have a header and right-most labels (solutions) column, both of 
+which are preserved. 
 
-CLEAN ROW
-This script loads a .csv dataset which is assumed to have both a header and right-most labels (solutions) column, both 
-of which are preserved. You provide the value you seek to remove from the dataset. Any row which contains this value 
-is automically removed from the dataset.
+When cleaning by Column, you provide the value you seek to remove from the dataset, and the threshhold (quantity) which 
+should invoke the removal. A '0' threshold removes an entire column if even just one instance of the value is found 
+while a '100' threshold removes the column only if every single row contains the given value. When cleaning by Row, 
+you provide the exact value you seek to remove, and any row that contains this value is automically removed from the 
+output dataset.
+
+	python karoo_data_clean.py sample.csv
+
+The original dataset is left unaltered.	
 '''
 
 ### USER INTERACTION ###
+
 if len(sys.argv) == 1: print '\n\t\033[31mERROR! You have not assigned an external data file. Try again ...\033[0;0m'; sys.exit()
 elif len(sys.argv) > 2: print '\n\t\033[31mERROR! You have assigned too many command line arguments. Try again ...\033[0;0m'; sys.exit()
 else: filename = sys.argv[1] # you have loaded an external data file
@@ -49,7 +53,7 @@ while True:
 	except ValueError: print '\t\033[32m Select from the options given. Try again ...\n\033[0;0m'
 	except KeyboardInterrupt: sys.exit()
 	
-value = raw_input('\n\tEnter the value you seek in the data (default nan): '); value = value or 'nan'
+value = raw_input('\n\tEnter the value you seek in the data (default nan): '); value = str(value) or 'nan'
 
 menu = ['s','f','']
 while True:
@@ -63,18 +67,17 @@ while True:
 del_list = []
 
 
-### LOAD DATA ###
-print '\n\tLoading dataset:\033[36m', filename, '\033[0;0m'
+### LOAD THE DATA ###
 
-data = np.loadtxt(filename, delimiter=',', dtype = str)
+print '\n\tLoading dataset:\033[36m', filename, '\033[0;0m'
+data = np.loadtxt(filename, delimiter = ',', dtype = str)
 header = data[0]
 data = np.delete(data,0,0)
 
-if d_type == 's': data = data.astype(str); value = str(value)
-else: data = data.astype(float); value = float(value)
+if d_type == 'f': data = data.astype(float); value = float(value)
 
-cols = len(data[0]) - 1 # count columns, but exclude the right-most labels column
-rows = len(data) # count rows
+cols = data.shape[1]) - 1 # count columns, but exclude the right-most labels column so as to not delete labels
+rows = data.shape[0] # count rows
 print '\n\tThis dataset has\033[36m', cols, '\033[0;0mcolumns (not including labels) and\033[36m', rows, '\033[0;0mrows.'
 
 pause = raw_input('\n\tPress ENTER to continue ...\n')
@@ -128,8 +131,9 @@ elif clean == 'c': # clean columns
 			header_clean = np.delete(header, del_list, axis = 0)
 			
 
-### SAVE REDUCED DATASET ###
-data_out = np.vstack((header_clean, data_clean)) # re-attach the data to the header
+### SAVE THE MODIFIED DATA ###
+
+data_out = np.vstack((header_clean, data_clean)) # re-attach the header to the data
 file_tmp = filename.split('.')[0]
 np.savetxt(file_tmp + '-CLEAN.csv', data_out, delimiter = ',', fmt='%s')
 

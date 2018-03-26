@@ -1,6 +1,7 @@
 # Karoo Data Sort
-# by Kai Staats, MSc UCT / AIMS and Arun Kumar, PhD
-# version 0.3
+# by Kai Staats, MSc and Arun Kumar, PhD
+# see LICENSE.md
+# version 2018 03/26
 
 import os
 import sys
@@ -13,9 +14,17 @@ In machine learning, it is often the case that your engaged dataset is derived f
 a subset, if we grab a series of datapoints (rows in a .csv) from the larger dataset in sequential order, only from 
 the top, middle, or bottom, we will likely bias the new dataset and incorrectly train the machine learning algorithm. 
 Therefore it is imperative that we engage a random function, guided only by the number of data points for each class.
+ 
+	python karoo_data_sort.py sample.csv
+
+As this sample contains only 20 total rows, select just 5 as the output and it will produce a sorted .csv with 5 of 
+each class, 50% of the original file.
+
+The original dataset is left unaltered.	
 '''
 
 ### USER INTERACTION ###
+
 if len(sys.argv) == 1: print '\n\t\033[31mERROR! You have not assigned an input file. Try again ...\033[0;0m'; sys.exit()
 elif len(sys.argv) > 2: print '\n\t\033[31mERROR! You have assigned too many command line arguments. Try again ...\033[0;0m'; sys.exit()
 else: filename = sys.argv[1]
@@ -44,18 +53,18 @@ while True:
 	except ValueError: print '\n\t\033[32mEnter a number from 10 including 100,000. Try again ...\033[0;0m'
 
 
-### LOAD DATA ###
-print '\n\tLoading dataset:\033[36m', filename, '\033[0;0m'
+### LOAD THE DATA ###
 
-data = np.loadtxt(filename, delimiter=',', dtype = str)
+print '\n\tLoading dataset:\033[36m', filename, '\033[0;0m'
+data = np.loadtxt(filename, delimiter = ',', dtype = str)
 header = data[0]
 data = np.delete(data,0,0)
-
 labels = len(np.unique(data[:,-1]))
 
 
-### SORT DATA by LABEL ###
-data_out = np.empty((1, len(data[0]))) # initiate an empty array with the same number of columns as the original data
+### SORT DATA BY LABEL ###
+
+data_out = np.empty((1, data.shape[1])) # build an empty array with the same number of columns as the original data
 
 for label in range(labels):
 	rows_list = np.where(data[:,-1] == str(label)) # list all rows which end in the current label	
@@ -65,9 +74,9 @@ for label in range(labels):
 data_out = np.delete(data_out,0,0) # delete the top, empty row
 
 
-### SAVE SORTED DATASET ###
-data_out = np.vstack((header, data_out)) # re-attach the data to the header
+### SAVE THE MODIFIED DATA ###
 
+data_out = np.vstack((header, data_out)) # re-attach the header to the data
 file_tmp = filename.split('.')[0]
 np.savetxt(file_tmp + '-SORT.csv', data_out, delimiter = ',', fmt='%s')
 
