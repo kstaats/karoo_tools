@@ -1,6 +1,14 @@
 # Karoo Tools
 
-Karoo Tools are simple tools, each designed to perform one function. They help you prepare your data for Machine 
-Learning runs. Quick to learn and easy to use. Good instructions. Please let me know if I have achieved that goal.
+An introduction to each Tool is included in the header. Simply cat the file to learn more:
 
-Batteries included. No programming required.
+cat karoo_[tool].py
+
+
+Unless otherwise specified, each Karoo Tool is run as follows:
+
+(in Python direct)
+python karoo_[tool].py [data.csv]
+
+(in iPython)
+run karoo_[tool].py [data.csv]
