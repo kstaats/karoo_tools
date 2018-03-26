@@ -1,6 +1,6 @@
-# Karoo Dataset Clean by Column
+# Karoo Data Clean
 # by Kai Staats, MSc
-# version 0.2
+# version 0.3
 
 import os
 import sys
@@ -10,15 +10,15 @@ np.set_printoptions(linewidth = 320) # set the terminal to print 320 characters 
 
 '''
 CLEAN COLUMN
-This script loads your a .csv dataset which is assumed to have both a header and right-most labels (solutions) column, 
-both of which are preserved. You, the user, provide the value you seek to remove from the dataset, and the threshhold 
-(quantity) which should invoke said removal. A '0' threashold removes an entire column if even just one instance of 
-the value is found. A '100' threshold removes the column only if every single row contains the given value.
+This script loads a .csv dataset which is assumed to have both a header and right-most labels (solutions) column, both 
+of which are preserved. You provide the value you seek to remove from the dataset, and the threshhold (quantity) which 
+should invoke the removal. A '0' threshold removes an entire column if even just one instance of the value is found 
+while a '100' threshold removes the column only if every single row contains the given value.
 
 CLEAN ROW
-This script loads your a .csv dataset which is assumed to have both a header and right-most labels (solutions) column, 
-both of which are preserved. You, the user, provide the value you seek to remove from the dataset. Any row which 
-contains this value is automically removed from the dataset.
+This script loads a .csv dataset which is assumed to have both a header and right-most labels (solutions) column, both 
+of which are preserved. You provide the value you seek to remove from the dataset. Any row which contains this value 
+is automically removed from the dataset.
 '''
 
 ### USER INTERACTION ###

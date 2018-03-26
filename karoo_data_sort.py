@@ -1,6 +1,6 @@
-# Karoo Dataset Sort
+# Karoo Data Sort
 # by Kai Staats, MSc UCT / AIMS and Arun Kumar, PhD
-# version 1.0
+# version 0.3
 
 import os
 import sys
@@ -10,9 +10,9 @@ np.set_printoptions(linewidth = 320) # set the terminal to print 320 characters 
 
 '''
 In machine learning, it is often the case that your engaged dataset is derived from a larger parent. In constructing 
-the subset, if we grab a series of datapoints (rows in a .csv) from the larger dataset in sequential order, only from 
+a subset, if we grab a series of datapoints (rows in a .csv) from the larger dataset in sequential order, only from 
 the top, middle, or bottom, we will likely bias the new dataset and incorrectly train the machine learning algorithm. 
-Therefore, it is imperative that we engage a random function, guided only by the number of data points for each class.
+Therefore it is imperative that we engage a random function, guided only by the number of data points for each class.
 '''
 
 ### USER INTERACTION ###
