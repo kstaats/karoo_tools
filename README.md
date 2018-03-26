@@ -1,8 +1,6 @@
 # Karoo Tools
 
-Karoo Tools include the tools originally included with Karoo GP. This tool set will grow over time as new tools are 
-developed, validated, and given the Karoo interface. The intent is for these to be quick to learn and easy to use.
+Karoo Tools are simple tools, each designed to perform one function. They help you prepare your data for Machine 
+Learning runs. Quick to learn and easy to use. Good instructions. Please let me know if I have achieved that goal.
 
 Batteries included. No programming required.
-
-Learn more at <a href="https://github.com/kstaats?tab=repositories">https://github.com/kstaats?tab=repositories</a> ...
