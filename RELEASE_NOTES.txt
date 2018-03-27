@@ -1,4 +1,11 @@
-2018 03/26
+2018 03/26b
+
+Got the karoo_pipeline.py working with or without the left-most column being an ID.
+
+A typo fixed in karoo_clean.py. Several minor, aesthetic updates to all the tools.
+
+
+2018 03/26a
 
 Spent the better part of today working throgh my archive of working but could-be-better tools, giving them the final
 touches to bring them into the Karoo family. Now each has a proper old-school-is-cool banner, nearly identical code
