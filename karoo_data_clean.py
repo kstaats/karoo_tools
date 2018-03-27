@@ -42,26 +42,24 @@ print '\t **  **   **    **  **  **   **    **  **    **     **    **  **     **
 print '\t **   **  **    **  **   **  **    **  **    **     **    **  **     **       **    **  **    **'
 print '\t **    ** **    **  **    **  ******    ******       ******    *****  ******  **    **  **    **'
 print '\033[0;0m'
-print '\t\033[36m Data Prep for Machine Learning in Python - by Kai Staats, version 0.3\033[0;0m'
+print '\t\033[36m Data Prep for Machine Learning in Python - by Kai Staats\033[0;0m\n'
 
-menu = ['c','r','']
 while True:
 	try:
-		clean = raw_input('\n\tClean your data by (c)olumn or by (r)ow (default r): ')
-		if clean not in menu: raise ValueError()
+		clean = raw_input('\t Clean your data by (c)olumn or by (r)ow (default r): ')
+		if clean not in ['c','r','']: raise ValueError()
 		clean = clean or 'r'; break
-	except ValueError: print '\t\033[32m Select from the options given. Try again ...\n\033[0;0m'
+	except ValueError: print '\n\t\033[32m Select from the options given. Try again ...\033[0;0m'
 	except KeyboardInterrupt: sys.exit()
 	
-value = raw_input('\n\tEnter the value you seek in the data (default nan): '); value = str(value) or 'nan'
+value = raw_input('\t Enter the value you seek in the data (default nan): '); value = str(value) or 'nan'
 
-menu = ['s','f','']
 while True:
 	try:
-		d_type = raw_input('\n\tAre you seeking a (s)tring or a (f)loat? (default s): ')
-		if d_type not in menu: raise ValueError()
+		d_type = raw_input('\t Are you seeking a (s)tring or a (f)loat? (default s): ')
+		if d_type not in ['s','f','']: raise ValueError()
 		d_type = d_type or 's'; break
-	except ValueError: print '\t\033[32m Select from the options given. Try again ...\n\033[0;0m'
+	except ValueError: print '\n\t\033[32m Select from the options given. Try again ...\033[0;0m'
 	except KeyboardInterrupt: sys.exit()
 
 del_list = []
@@ -69,7 +67,7 @@ del_list = []
 
 ### LOAD THE DATA ###
 
-print '\n\tLoading dataset:\033[36m', filename, '\033[0;0m'
+print '\n\t Loading dataset:\033[36m', filename, '\033[0;0m'
 data = np.loadtxt(filename, delimiter = ',', dtype = str)
 header = data[0]
 data = np.delete(data,0,0)
@@ -78,9 +76,7 @@ if d_type == 'f': data = data.astype(float); value = float(value)
 
 cols = data.shape[1] - 1 # count columns, but exclude the right-most labels column so as to not delete labels
 rows = data.shape[0] # count rows
-print '\n\tThis dataset has\033[36m', cols, '\033[0;0mcolumns (not including labels) and\033[36m', rows, '\033[0;0mrows.'
-
-pause = raw_input('\n\tPress ENTER to continue ...\n')
+print '\n\t This dataset has\033[36m', cols, '\033[0;0mcolumns (not including labels) and\033[36m', rows, '\033[0;0mrows.'
 
 
 ### COUNT MATCHES ###
@@ -91,9 +87,10 @@ if clean == 'r': # clean rows
 		for m in range(cols):
 			if data[n][m] == value: del_list.append(n)
 				
-	if del_list == []: print '\tNo rows contain the value:\033[36m', value, '\033[0;0m'; sys.exit()
+	if del_list == []: print '\t No rows contain the value:\033[36m', value, '\033[0;0m'; sys.exit()
 	else: # at least one row contains the given value
-		print '\tThe following\033[36m', len(del_list), '\033[0;0mrows will be removed from the new dataset:\n\n\t\033[36m', del_list, '\033[0;0m'
+		print '\t The following\033[36m', len(del_list), '\033[0;0mrows will be removed from the new dataset:\n\n\t\033[36m', del_list, '\033[0;0m'
+		pause = raw_input('\n\t Press ENTER to continue ...')
 		data_clean = np.delete(data, del_list, axis = 0) # remove the designated rows
 		header_clean = header
 		
@@ -107,13 +104,13 @@ elif clean == 'c': # clean columns
 			
 		# print '\t column\033[36m', n, '\033[0;0mcontains\033[36m', int(o[n]), '\033[0;0mof the value:\033[36m', value, '\033[0;0m'
 		
-	if np.sum(o) == 0: print '\tNo columns contain the value:\033[36m', value, '\033[0;0m'; sys.exit() # changed .any to .sum 20170929
+	if np.sum(o) == 0: print '\t No columns contain the value:\033[36m', value, '\033[0;0m'; sys.exit() # changed .any to .sum 20170929
 	else: # at least one column contains the given value
 	
 		menu = range(0,101)
 		while True:
 			try:
-				threshold = raw_input('\tWhat is the minimum percental for removal of a column? (default 0): ')
+				threshold = raw_input('\t What is the minimum percental for removal of a column? (default 0): ')
 				if threshold not in str(menu): raise ValueError()
 				elif threshold == '': threshold = 0
 				threshold = int(threshold); break
@@ -124,9 +121,10 @@ elif clean == 'c': # clean columns
 			if o[n] != 0 and float(o[n])/rows >= float(threshold)/100:
 				del_list.append(n)
 
-		if del_list == []: print '\n\tNo columns contain\033[36m', str(threshold) + '%', '\033[0;0mof the value:\033[36m', value, '\033[0;0m'; sys.exit()	
+		if del_list == []: print '\n\t No columns contain\033[36m', str(threshold) + '%', '\033[0;0mof the value:\033[36m', value, '\033[0;0m'; sys.exit()	
 		else:
-			print '\n\tThe following columns are removed from the new dataset:\n\n\t\033[36m', del_list, '\033[0;0m'
+			print '\n\t The following columns are removed from the new dataset:\n\n\t\033[36m', del_list, '\033[0;0m'
+			pause = raw_input('\n\t Press ENTER to continue ...')
 			data_clean = np.delete(data, del_list, axis = 1)
 			header_clean = np.delete(header, del_list, axis = 0)
 			
@@ -137,6 +135,6 @@ data_out = np.vstack((header_clean, data_clean)) # re-attach the header to the d
 file_tmp = filename.split('.')[0]
 np.savetxt(file_tmp + '-CLEAN.csv', data_out, delimiter = ',', fmt='%s')
 
-print '\n\tThe cleaned dataset has been written to the file:\033[36m', file_tmp + '-CLEAN.csv', '\033[0;0m'
+print '\n\t The cleaned dataset has been written to the file:\033[36m', file_tmp + '-CLEAN.csv', '\033[0;0m'
 
 

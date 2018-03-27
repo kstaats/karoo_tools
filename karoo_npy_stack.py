@@ -15,7 +15,8 @@ Machine Learing algorthm can process a Numpy binary is far greater than processi
 makes them that much more portable.
 
 The current implementation of this script is designed to prepare test images for a CNN conducting Semantic Segementation
-on b/w images (no gray scale, no color). A future version of this script will certainly be more flexible.
+on b/w images. It currently works only with the R channel of RGB images, so if your images are in color, two of those 
+channels will be lost. A near future version of this script will certainly be more flexible.
 
 	python karoo_npy_stack.py sample_npy_stack/ sample.npy
 
@@ -39,7 +40,8 @@ print '\t **  **   **    **  **  **   **    **  **    **     **   ***  **       
 print '\t **   **  **    **  **   **  **    **  **    **     **    **  **          **'
 print '\t **    ** **    **  **    **  ******    ******      **    **  **          **'
 print '\033[0;0m'
-print '\t\033[36m Save a stack of images as a Numpy binary - by Arun Aniyan and Kai Staats - version 20170927\033[0;0m'
+print '\t\033[36m Save a stack of images as a Numpy binary - by Arun Aniyan and Kai Staats\033[0;0m'
+print ''
 
 ### LOAD THE DATA ###
 
@@ -57,7 +59,7 @@ img_array = np.empty([int(len(dir_list)), int(image_x), int(image_y)])
 ### GENERATE THE IMAGE ARRAY
 
 i = 0
-print '\n\tLoading images (arrays) ...'
+print '\tLoading images (arrays) ...'
 
 for file_in in dir_list:
 	img = imread(str(dirname) + '/' + file_in)
@@ -67,14 +69,12 @@ for file_in in dir_list:
 	i = i + 1
 	
 if img_array.max() > 1: # the image (array) contains values other than 0 or 1
-	print '\n\t\033[31mERROR!\033[0;0m One or more images (arrays) has values other than 1 (black) or 0 (white).'
+	print '\n\tOne or more images (arrays) has values other than 1 (black) or 0 (white).'
 	
-	menu = ['y','n']
 	while True:
 		try:
 			convert = raw_input('\n\tDo you want to convert values of 255 to -1 and 0 to 1? (y or n): ')
-			if convert not in menu: raise ValueError()
-			
+			if convert not in ('y','n',''): raise ValueError()
 			if convert == 'n': break
 			elif convert == 'y':
 				img_array[img_array == 0] = 1; img_array[img_array == 255] = -1
@@ -83,7 +83,7 @@ if img_array.max() > 1: # the image (array) contains values other than 0 or 1
 		except ValueError: print '\n\t\033[32m Select from the options given, (y)es or (n)o. Try again ...\n\033[0;0m'
 		except KeyboardInterrupt: sys.exit()
 		
-#else: # we are working with a binary (0 or 1) image (array)
+# else: # we are working with a binary (0 or 1) image (array)
 
 
 ### SAVE THE MODIFIED DATA ###

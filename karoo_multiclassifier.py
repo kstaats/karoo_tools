@@ -32,30 +32,30 @@ print '\t **  **   **    **  **  **   **    **  **    **     **    **  **     **
 print '\t **   **  **    **  **   **  **    **  **    **     **    **  **     **    **  **    **  **    **'
 print '\t **    ** **    **  **    **  ******    ******       ******    ***** **    **   ******    ******'
 print '\033[0;0m'
-print '\t\033[36m A multi-classifier demonstration - by Kai Staats\033[0;0m'
+print '\t\033[36m A multi-classifier demonstration - by Kai Staats\033[0;0m\n'
 
 while True:
 	try:
-		skew_sel = raw_input('\n\t Skew the data across the origin? y/n (default y): ')
-		if skew_sel not in ('y','n',''): raise ValueError()
+		skew_sel = raw_input('\t Skew the data across the origin? y/n (default y): ')
+		if skew_sel not in ['y','n','']: raise ValueError()
 		skew_sel = skew_sel or 'y'; break
-	except ValueError: print '\033[32mSelect from the options given. Try again ...\n\033[0;0m'
+	except ValueError: print '\n\t\033[32m Select from the options given. Try again ...\033[0;0m'
 
 while True:
 	try:
 		class_type = raw_input('\t Select (i)nfinite or (f)inite wing bins (default i): ')
-		if class_type not in ('i','f',''): raise ValueError()
+		if class_type not in ['i','f','']: raise ValueError()
 		class_type = class_type or 'i'; break
-	except ValueError: print '\033[32mSelect from the options given. Try again ...\n\033[0;0m'
+	except ValueError: print '\n\t\033[32m Select from the options given. Try again ...\033[0;0m'
 
-n = range(1,100)
+menu = range(1,101)
 while True:
 	try:
 		class_labels = raw_input('\t Enter the number of class labels / solutions (default 4): ')
-		if class_labels not in str(n) and class_labels not in '': raise ValueError()
+		if class_labels not in str(menu) and class_labels not in '': raise ValueError()
 		if class_labels == '0': class_labels = 1; break
 		class_labels = class_labels or 4; class_labels = int(class_labels); break
-	except ValueError: print '\033[32m Enter a number from 3 including 100. Try again ...\n\033[0;0m'
+	except ValueError: print '\n\t\033[32m Enter a number from 3 including 100. Try again ...\033[0;0m'
 
 
 ### PROCESS AND OUTPUT TO SCREEN - WITH SKEW ###

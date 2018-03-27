@@ -38,25 +38,25 @@ print '\t **  **   **    **  **  **   **    **  **    **     **   ***  **    ** 
 print '\t **   **  **    **  **   **  **    **  **    **     **    **  **    **  **   **  **       **'
 print '\t **    ** **    **  **    **  ******    ******      **    **   ******   **    ** **       **'
 print '\033[0;0m'
-print '\t\033[36m Data Prep for Machine Learning in Python - by Kai Staats, version 0.3\033[0;0m'
+print '\t\033[36m Data Prep for Machine Learning in Python - by Kai Staats\033[0;0m\n'
 
-n = range(1,9)
+menu = range(1,9)
 while True:
 	try:
-		fp = raw_input('\n\tEnter number of floating points desired in normalised data (default 4): ')
-		if fp not in str(n) and fp not in '': raise ValueError()
+		fp = raw_input('\t Enter number of floating points desired in normalised data (default 4): ')
+		if fp not in str(menu) and fp not in '': raise ValueError()
 		if fp == '0': fp = 1; break
 		fp = fp or 4; fp = int(fp); break
-	except ValueError: print '\n\t\033[32mEnter a number from 1 including 8. Try again ...\033[0;0m'
+	except ValueError: print '\n\t\033[32m Enter a number from 1 including 8. Try again ...\033[0;0m'
 	
 
 ### LOAD THE DATA ###
 
-print '\n\t\033[36mLoading dataset:', filename, '\033[0;0m\n'
+print '\n\t\033[36m Loading dataset:', filename, '\033[0;0m'
 data = np.loadtxt(filename, delimiter = ',', dtype = str) # load the data
 header = data[0] # store the header for each column
 data = np.delete(data,0,0) # delete the header from the data
-data = data.astype(np.float) # convert the array from string to float
+data = data.astype(np.float) # convert the remaining array from string to float
 
 
 ### NORMALISE THE DATA ###
@@ -84,7 +84,7 @@ def normalise(array):
 data_out = np.zeros(shape = (data.shape[0], data.shape[1])) # build an array that matches the shape of the original
 
 for col in range(data.shape[1] - 1): # count columns, but exclude the right-most labels column so as to not delete labels
-	print '\tnormalising column:', col
+	print '\t normalising column:', col
 	
 	colsum = []
 	for row in range(data.shape[0]):
@@ -101,6 +101,6 @@ data_out = np.vstack((header, data_out)) # re-attach the header to the data
 file_tmp = filename.split('.')[0]
 np.savetxt(file_tmp + '-NORM.csv', data_out, delimiter = ',', fmt='%s')
 
-print '\n\t\033[36mThe normlised dataset has been written to the file:', file_tmp + '-NORM.csv', '\033[0;0m'
+print '\n\t\033[36m The normlised dataset has been written to the file:', file_tmp + '-NORM.csv', '\033[0;0m'
 
 

@@ -41,25 +41,26 @@ print '\t **  **   **    **  **  **   **    **  **    **     **    **  **    ** 
 print '\t **   **  **    **  **   **  **    **  **    **     **    **  **    **  **   **    **'
 print '\t **    ** **    **  **    **  ******    ******       ******    ******   **    **   **'
 print '\033[0;0m'
-print '\t\033[36m Data Prep for Machine Learning in Python - by Kai Staats, version 0.3\033[0;0m'
+print '\t\033[36m Data Prep for Machine Learning in Python - by Kai Staats\033[0;0m\n'
 
-menu = range(1,100001)
-while True:
-	try:
-		samples = raw_input('\n\tEnter number of desired datapoints per class (default 100): ')
-		if samples not in str(menu) or samples == '0': raise ValueError()
-		elif samples == '': samples = 100
-		samples = int(samples); break
-	except ValueError: print '\n\t\033[32mEnter a number from 10 including 100,000. Try again ...\033[0;0m'
-
+# the UI usually goes here, but in this case we need to know the number of rows in the dataset
 
 ### LOAD THE DATA ###
 
-print '\n\tLoading dataset:\033[36m', filename, '\033[0;0m'
+print '\t Loading dataset:\033[36m', filename, '\033[0;0m\n'
 data = np.loadtxt(filename, delimiter = ',', dtype = str)
 header = data[0]
 data = np.delete(data,0,0)
 labels = len(np.unique(data[:,-1]))
+
+menu = range(1,len(data)/2)
+while True:
+	try:
+		samples = raw_input('\t Enter number of desired datapoints per class (default %s): ' % str(len(data)/2)) 
+		if samples not in str(menu) or samples == '0': raise ValueError()
+		elif samples == '': samples = len(data)/2
+		samples = int(samples); break
+	except ValueError: print '\n\t\033[32m Enter a number from 1 including %s. Try again ... \033[0;0m' % str(len(data)/2)
 
 
 ### SORT DATA BY LABEL ###
@@ -80,6 +81,6 @@ data_out = np.vstack((header, data_out)) # re-attach the header to the data
 file_tmp = filename.split('.')[0]
 np.savetxt(file_tmp + '-SORT.csv', data_out, delimiter = ',', fmt='%s')
 
-print '\n\tThe sorted dataset has been written to the file:\033[36m', file_tmp + '-SORT.csv', '\033[0;0m'
+print '\n\t The sorted dataset has been written to the file:\033[36m', file_tmp + '-SORT.csv', '\033[0;0m'
 
 
