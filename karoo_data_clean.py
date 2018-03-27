@@ -76,7 +76,7 @@ data = np.delete(data,0,0)
 
 if d_type == 'f': data = data.astype(float); value = float(value)
 
-cols = data.shape[1]) - 1 # count columns, but exclude the right-most labels column so as to not delete labels
+cols = data.shape[1] - 1 # count columns, but exclude the right-most labels column so as to not delete labels
 rows = data.shape[0] # count rows
 print '\n\tThis dataset has\033[36m', cols, '\033[0;0mcolumns (not including labels) and\033[36m', rows, '\033[0;0mrows.'
 
