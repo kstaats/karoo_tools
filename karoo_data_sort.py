@@ -10,17 +10,17 @@ import numpy as np
 np.set_printoptions(linewidth = 320) # set the terminal to print 320 characters before line-wrapping in order to view Trees
 
 '''
-In machine learning, it is often the case that your engaged dataset is derived from a larger parent. In constructing 
-a subset, if we grab a series of datapoints (rows in a .csv) from the larger dataset in sequential order, only from 
-the top, middle, or bottom, we will likely bias the new dataset and incorrectly train the machine learning algorithm. 
+In machine learning, it is often the case that your engaged dataset is derived from a larger parent. In constructing
+a subset, if we grab a series of datapoints (rows in a .csv) from the larger dataset in sequential order, only from
+the top, middle, or bottom, we will likely bias the new dataset and incorrectly train the machine learning algorithm.
 Therefore it is imperative that we engage a random function, guided only by the number of data points for each class.
- 
+
 	python karoo_data_sort.py sample.csv
 
-As this sample contains only 20 total rows, select just 5 as the output and it will produce a sorted .csv with 5 of 
+As this sample contains only 20 total rows, select just 5 as the output and it will produce a sorted .csv with 5 of
 each class, 50% of the original file.
 
-The original dataset is left unaltered.	
+The original dataset is left unaltered.
 '''
 
 ### USER INTERACTION ###
@@ -30,7 +30,7 @@ elif len(sys.argv) > 2: print '\n\t\033[31mERROR! You have assigned too many com
 else: filename = sys.argv[1]
 
 os.system('clear')
-		
+
 print '\n\033[36m\033[1m'
 print '\t **   **   ******    *****    ******    ******       ******    ******    *****   ******'
 print '\t **  **   **    **  **   **  **    **  **    **     **    **  **    **  **   **    **'
@@ -56,7 +56,7 @@ labels = len(np.unique(data[:,-1]))
 menu = range(1,len(data)/2)
 while True:
 	try:
-		samples = raw_input('\t Enter number of desired datapoints per class (default %s): ' % str(len(data)/2)) 
+		samples = raw_input('\t Enter number of desired datapoints per class (default %s): ' % str(len(data)/2))
 		if samples not in str(menu) or samples == '0': raise ValueError()
 		elif samples == '': samples = len(data)/2
 		samples = int(samples); break
@@ -68,7 +68,7 @@ while True:
 data_out = np.empty((1, data.shape[1])) # build an empty array with the same number of columns as the original data
 
 for label in range(labels):
-	rows_list = np.where(data[:,-1] == str(label)) # list all rows which end in the current label	
+	rows_list = np.where(data[:,-1] == str(label)) # list all rows which end in the current label
 	rows_select = np.random.choice(rows_list[0], samples, replace = False) # randomly select rows from list
 	data_out = np.append(data_out, data[rows_select], axis = 0)
 

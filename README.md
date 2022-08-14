@@ -1,7 +1,7 @@
 # Karoo Tools
 
 Karoo Tools help you prepare your data for Machine Learning runs. Each Tool has one function. The intent is easy to
-use, simple to learn. Let me know if I have achieved this goal. An introduction to each Tool is included in the header. 
+use, simple to learn. Let me know if I have achieved this goal. An introduction to each Tool is included in the header.
 
 All data is anticipated to be in the following fomat:
  - comma separated values .csv
