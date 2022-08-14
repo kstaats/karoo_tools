@@ -15,7 +15,7 @@ column, finding the maximum and minimum values, and then modifying each value to
 The modified values are written to a new file, the original remaining untouched. This script is often used *after*
 karoo_data_sort.py.
 
-	python karoo_normalise.py sample.csv
+    python karoo_normalise.py sample.csv
 
 The original dataset is left unaltered.
 '''
@@ -42,12 +42,12 @@ print '\t\033[36m Data Prep for Machine Learning in Python - by Kai Staats\033[0
 
 menu = range(1,9)
 while True:
-	try:
-		fp = raw_input('\t Enter number of floating points desired in normalised data (default 4): ')
-		if fp not in str(menu) and fp not in '': raise ValueError()
-		if fp == '0': fp = 1; break
-		fp = fp or 4; fp = int(fp); break
-	except ValueError: print '\n\t\033[32m Enter a number from 1 including 8. Try again ...\033[0;0m'
+    try:
+        fp = raw_input('\t Enter number of floating points desired in normalised data (default 4): ')
+        if fp not in str(menu) and fp not in '': raise ValueError()
+        if fp == '0': fp = 1; break
+        fp = fp or 4; fp = int(fp); break
+    except ValueError: print '\n\t\033[32m Enter a number from 1 including 8. Try again ...\033[0;0m'
 
 
 ### LOAD THE DATA ###
@@ -63,34 +63,34 @@ data = data.astype(np.float) # convert the remaining array from string to float
 
 def normalise(array):
 
-	'''
-	The formula was derived from stn.spotfire.com/spotfire_client_help/norm/norm_normalizing_columns.htm
-	'''
+    '''
+    The formula was derived from stn.spotfire.com/spotfire_client_help/norm/norm_normalizing_columns.htm
+    '''
 
-	norm = []
-	array_norm = []
-	array_min = np.min(array)
-	array_max = np.max(array)
+    norm = []
+    array_norm = []
+    array_min = np.min(array)
+    array_max = np.max(array)
 
-	for col in range(1, len(array) + 1):
-		# norm = float((array[col - 1] - array_min) / (array_max - array_min))
-		norm = float(array[col - 1] - array_min) / float(array_max - array_min)
-		norm = round(norm, fp) # force to 4 decimal points
-		array_norm = np.append(array_norm, norm)
+    for col in range(1, len(array) + 1):
+        # norm = float((array[col - 1] - array_min) / (array_max - array_min))
+        norm = float(array[col - 1] - array_min) / float(array_max - array_min)
+        norm = round(norm, fp) # force to 4 decimal points
+        array_norm = np.append(array_norm, norm)
 
-	return array_norm
+    return array_norm
 
 
 data_out = np.zeros(shape = (data.shape[0], data.shape[1])) # build an array that matches the shape of the original
 
 for col in range(data.shape[1] - 1): # count columns, but exclude the right-most labels column so as to not delete labels
-	print '\t normalising column:', col
+    print '\t normalising column:', col
 
-	colsum = []
-	for row in range(data.shape[0]):
-		colsum = np.append(colsum, data[row,col])
+    colsum = []
+    for row in range(data.shape[0]):
+        colsum = np.append(colsum, data[row,col])
 
-	data_out[:,col] = normalise(colsum) # add each normalised column of data
+    data_out[:,col] = normalise(colsum) # add each normalised column of data
 
 data_out[:,data.shape[1] - 1] = data[:,data.shape[1] - 1] # add the labels again
 
