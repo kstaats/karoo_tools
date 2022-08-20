@@ -18,7 +18,7 @@ The current implementation of this script is designed to prepare test images for
 on b/w images. It currently works only with the R channel of RGB images, so if your images are in color, two of those
 channels will be lost. A near future version of this script will certainly be more flexible.
 
-	python karoo_npy_stack.py sample_npy_stack/ sample.npy
+    python karoo_npy_stack.py sample_npy_stack/ sample.npy
 
 The original images are left unaltered.
 '''
@@ -62,26 +62,26 @@ i = 0
 print '\tLoading images (arrays) ...'
 
 for file_in in dir_list:
-	img = imread(str(dirname) + '/' + file_in)
-	if len(img.shape) == 3 and img.shape[2] == 3: img_array[i,:,:] = img[:,:,0] # grab the last of the 3-channel (RGB) images
-	elif len(img.shape) == 3 and img.shape[2] == 2: img_array[i,:] = img[:,0] # grab the last of the 2-channel (some PNGs) images
-	else: img_array[i] = img # for single channel (index'd BMP) images
-	i = i + 1
+    img = imread(str(dirname) + '/' + file_in)
+    if len(img.shape) == 3 and img.shape[2] == 3: img_array[i,:,:] = img[:,:,0] # grab the last of the 3-channel (RGB) images
+    elif len(img.shape) == 3 and img.shape[2] == 2: img_array[i,:] = img[:,0] # grab the last of the 2-channel (some PNGs) images
+    else: img_array[i] = img # for single channel (index'd BMP) images
+    i = i + 1
 
 if img_array.max() > 1: # the image (array) contains values other than 0 or 1
-	print '\n\tOne or more images (arrays) has values other than 1 (black) or 0 (white).'
+    print '\n\tOne or more images (arrays) has values other than 1 (black) or 0 (white).'
 
-	while True:
-		try:
-			convert = raw_input('\n\tDo you want to convert values of 255 to -1 and 0 to 1? (y or n): ')
-			if convert not in ('y','n',''): raise ValueError()
-			if convert == 'n': break
-			elif convert == 'y':
-				img_array[img_array == 0] = 1; img_array[img_array == 255] = -1
-				print '\n\t\033[36mValues of 255 are converted to -1, and values of 0 to 1\033[0;0m'; break
+    while True:
+        try:
+            convert = raw_input('\n\tDo you want to convert values of 255 to -1 and 0 to 1? (y or n): ')
+            if convert not in ('y','n',''): raise ValueError()
+            if convert == 'n': break
+            elif convert == 'y':
+                img_array[img_array == 0] = 1; img_array[img_array == 255] = -1
+                print '\n\t\033[36mValues of 255 are converted to -1, and values of 0 to 1\033[0;0m'; break
 
-		except ValueError: print '\n\t\033[32m Select from the options given, (y)es or (n)o. Try again ...\n\033[0;0m'
-		except KeyboardInterrupt: sys.exit()
+        except ValueError: print '\n\t\033[32m Select from the options given, (y)es or (n)o. Try again ...\n\033[0;0m'
+        except KeyboardInterrupt: sys.exit()
 
 # else: # we are working with a binary (0 or 1) image (array)
 

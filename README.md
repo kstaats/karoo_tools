@@ -14,14 +14,14 @@ All data is anticipated to be in the following fomat:
 
 To learn how to use each tool:
 
-	less karoo_[tool].py
+    less karoo_[tool].py
 
 If you combine the fundamental tools Clean, Sort, and Normalize, you'll see the progression of names:
 
-	sample_data.csv
-	sample_data-CLEAN.csv
-	sample_data-CLEAN-SORT.csv
-	sample_data-CLEAN-SORT-NORM.csv
+    sample_data.csv
+    sample_data-CLEAN.csv
+    sample_data-CLEAN-SORT.csv
+    sample_data-CLEAN-SORT-NORM.csv
 
 Such that the final dataset is the one prepared for your Machine Learning algorithm.
 
