@@ -25,23 +25,23 @@ The original images are left unaltered.
 
 ### USER INTERACTION ###
 
-if len(sys.argv) < 3: print '\n\t\033[31mERROR!\033[0;0m You have assigned too few arguments.\n\n\t[path_to]/[images] [output_image_name].npy. Try again ...\n'; sys.exit()
-elif len(sys.argv) > 3: print '\n\t\033[31mERROR!\033[0;0m You have assigned too many arguments.\n\n\t[path_to]/[images] [output_image_name].npy. Try again ...\n'; sys.exit()
+if len(sys.argv) < 3: print('\n\t\033[31mERROR!\033[0;0m You have assigned too few arguments.\n\n\t[path_to]/[images] [output_image_name].npy. Try again ...\n'); sys.exit()
+elif len(sys.argv) > 3: print('\n\t\033[31mERROR!\033[0;0m You have assigned too many arguments.\n\n\t[path_to]/[images] [output_image_name].npy. Try again ...\n'); sys.exit()
 
 os.system('clear')
 
-print '\n\033[36m\033[1m'
-print '\t **   **   ******    *****    ******    ******      **    **   ******  **    **'
-print '\t **  **   **    **  **   **  **    **  **    **     ***   **  **    **  **  **'
-print '\t ** **    **    **  **   **  **    **  **    **     ****  **  **    **   ****'
-print '\t ****     ********  ******   **    **  **    **     ** ** **  *******     **'
-print '\t ** **    **    **  ** **    **    **  **    **     **  ****  **          **'
-print '\t **  **   **    **  **  **   **    **  **    **     **   ***  **          **'
-print '\t **   **  **    **  **   **  **    **  **    **     **    **  **          **'
-print '\t **    ** **    **  **    **  ******    ******      **    **  **          **'
-print '\033[0;0m'
-print '\t\033[36m Save a stack of images as a Numpy binary - by Arun Aniyan and Kai Staats\033[0;0m'
-print ''
+print('\n\033[36m\033[1m')
+print('\t **   **   ******    *****    ******    ******      **    **   ******  **    **')
+print('\t **  **   **    **  **   **  **    **  **    **     ***   **  **    **  **  **')
+print('\t ** **    **    **  **   **  **    **  **    **     ****  **  **    **   ****')
+print('\t ****     ********  ******   **    **  **    **     ** ** **  *******     **')
+print('\t ** **    **    **  ** **    **    **  **    **     **  ****  **          **')
+print('\t **  **   **    **  **  **   **    **  **    **     **   ***  **          **')
+print('\t **   **  **    **  **   **  **    **  **    **     **    **  **          **')
+print('\t **    ** **    **  **    **  ******    ******      **    **  **          **')
+print('\033[0;0m')
+print('\t\033[36m Save a stack of images as a Numpy binary - by Arun Aniyan and Kai Staats\033[0;0m')
+print('')
 
 ### LOAD THE DATA ###
 
@@ -59,7 +59,7 @@ img_array = np.empty([int(len(dir_list)), int(image_x), int(image_y)])
 ### GENERATE THE IMAGE ARRAY
 
 i = 0
-print '\tLoading images (arrays) ...'
+print('\tLoading images (arrays) ...')
 
 for file_in in dir_list:
     img = imread(str(dirname) + '/' + file_in)
@@ -69,18 +69,18 @@ for file_in in dir_list:
     i = i + 1
 
 if img_array.max() > 1: # the image (array) contains values other than 0 or 1
-    print '\n\tOne or more images (arrays) has values other than 1 (black) or 0 (white).'
+    print('\n\tOne or more images (arrays) has values other than 1 (black) or 0 (white).')
 
     while True:
         try:
-            convert = raw_input('\n\tDo you want to convert values of 255 to -1 and 0 to 1? (y or n): ')
+            convert = input('\n\tDo you want to convert values of 255 to -1 and 0 to 1? (y or n): ')
             if convert not in ('y','n',''): raise ValueError()
             if convert == 'n': break
             elif convert == 'y':
                 img_array[img_array == 0] = 1; img_array[img_array == 255] = -1
-                print '\n\t\033[36mValues of 255 are converted to -1, and values of 0 to 1\033[0;0m'; break
+                print('\n\t\033[36mValues of 255 are converted to -1, and values of 0 to 1\033[0;0m'); break
 
-        except ValueError: print '\n\t\033[32m Select from the options given, (y)es or (n)o. Try again ...\n\033[0;0m'
+        except ValueError: print('\n\t\033[32m Select from the options given, (y)es or (n)o. Try again ...\n\033[0;0m')
         except KeyboardInterrupt: sys.exit()
 
 # else: # we are working with a binary (0 or 1) image (array)
@@ -88,7 +88,7 @@ if img_array.max() > 1: # the image (array) contains values other than 0 or 1
 
 ### SAVE THE MODIFIED DATA ###
 
-print '\n\tSaving Numpy array file:', file_out
+print('\n\tSaving Numpy array file:', file_out)
 
 np.save(file_out, img_array)
 

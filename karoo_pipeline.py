@@ -29,38 +29,38 @@ point has been classified.
 
 ### USER INTERACTION ###
 
-if len(sys.argv) == 1: print '\n\t\033[31mERROR! You have not assigned an input file. Try again ...\033[0;0m'; sys.exit()
-elif len(sys.argv) > 2: print '\n\t\033[31mERROR! You have assigned too many command line arguments. Try again ...\033[0;0m'; sys.exit()
+if len(sys.argv) == 1: print('\n\t\033[31mERROR! You have not assigned an input file. Try again ...\033[0;0m'); sys.exit()
+elif len(sys.argv) > 2: print('\n\t\033[31mERROR! You have assigned too many command line arguments. Try again ...\033[0;0m'); sys.exit()
 else: filename = sys.argv[1]
 
 os.system('clear')
 
-print '\n\033[36m\033[1m'
-print '\t **   **   ******    *****    ******    ******       ******   **'
-print '\t **  **   **    **  **   **  **    **  **    **     **    **  **'
-print '\t ** **    **    **  **   **  **    **  **    **     **    **  **'
-print '\t ****     ********  ******   **    **  **    **     *******   **'
-print '\t ** **    **    **  ** **    **    **  **    **     **        **'
-print '\t **  **   **    **  **  **   **    **  **    **     **        **'
-print '\t **   **  **    **  **   **  **    **  **    **     **        **'
-print '\t **    ** **    **  **    **  ******    ******      **        ******'
-print '\033[0;0m'
-print '\t\033[36m Apply your evolved GP expression to a realworld pipeline - by Kai Staats\033[0;0m\n'
+print('\n\033[36m\033[1m')
+print('\t **   **   ******    *****    ******    ******       ******   **')
+print('\t **  **   **    **  **   **  **    **  **    **     **    **  **')
+print('\t ** **    **    **  **   **  **    **  **    **     **    **  **')
+print('\t ****     ********  ******   **    **  **    **     *******   **')
+print('\t ** **    **    **  ** **    **    **  **    **     **        **')
+print('\t **  **   **    **  **  **   **    **  **    **     **        **')
+print('\t **   **  **    **  **   **  **    **  **    **     **        **')
+print('\t **    ** **    **  **    **  ******    ******      **        ******')
+print('\033[0;0m')
+print('\t\033[36m Apply your evolved GP expression to a realworld pipeline - by Kai Staats\033[0;0m\n')
 
 while True:
     try:
-        algo_paste = raw_input('\t Enter the Sympified expression from Karoo GP: ')
+        algo_paste = input('\t Enter the Sympified expression from Karoo GP: ')
         if algo_paste == '': raise ValueError()
         break
-    except ValueError: print '\n\t\033[32m An empty expression is not going to get you very far. Try again ...\n\033[0;0m'
+    except ValueError: print('\n\t\033[32m An empty expression is not going to get you very far. Try again ...\n\033[0;0m')
     except KeyboardInterrupt: sys.exit()
 
 while True:
     try:
-        function = raw_input('\t Select (c)lassification or (r)egression? (default c): ')
+        function = input('\t Select (c)lassification or (r)egression? (default c): ')
         if function not in ['c','r','']: raise ValueError()
         function = function or 'c'; break
-    except ValueError: print '\t\033[32m Select from the options given. Try again ...\n\033[0;0m'
+    except ValueError: print('\t\033[32m Select from the options given. Try again ...\n\033[0;0m')
     except KeyboardInterrupt: sys.exit()
 
 #while True:
@@ -108,7 +108,7 @@ def fx_eval_subs(datum, algo_paste):
     algo_sym = sp.sympify(algo_paste) # string converted to a functional expression
     subs = algo_sym.subs(datum) # process the expression against the datum
     if str(subs) == 'zoo': # result = 1 # TEST & DEBUG: print 'divide by zero', result; self.fx_karoo_pause(0)
-        print '\n\t\033[31mERROR! Divide by zero\033[0;0m'; sys.exit()
+        print('\n\t\033[31mERROR! Divide by zero\033[0;0m'); sys.exit()
 
     else: result = round(float(subs), precision) # force 'result' to the set number of floating points
 
@@ -129,14 +129,14 @@ if function == 'c':
         if result <= 0: # test for class 0
             if header[0] == 'id': class_0.append([data_dict_array[row]['id']]) # record the ID if available
             else: class_0.append(row) # else record the .csv row number
-            print '\t\033[36m data row', row, 'predicts class:\033[1m 0 as', result, '<=', 0, '\033[0;0m'
+            print('\t\033[36m data row', row, 'predicts class:\033[1m 0 as', result, '<=', 0, '\033[0;0m')
 
         elif result > 0: # test for class 1
             if header[0] == 'id': class_1.append([data_dict_array[row]['id']]) # record the ID if available
             else: class_1.append(row) # else record the .csv row number
-            print '\t\033[36m data row', row, 'predicts class:\033[1m 1 as', result, '>', 0, '\033[0;0m'
+            print('\t\033[36m data row', row, 'predicts class:\033[1m 1 as', result, '>', 0, '\033[0;0m')
 
-        else: print 'Whoa! The result is neither <= 0 nor > 0. The universe will implode in 5 ... 4 ... 3 ...'; sys.exit()
+        else: print('Whoa! The result is neither <= 0 nor > 0. The universe will implode in 5 ... 4 ... 3 ...'); sys.exit()
 
 
 ### CONDUCT A REGRESSION RUN ###
@@ -146,21 +146,21 @@ else:
     for row in range(0, data_rows):
         result = fx_eval_subs(data_dict_array[row], algo_paste) # process the expression against the test data
         regress.append(result) # else record the .csv row number
-        print '\t\033[36m data row', row, 'produces:\033[1m', result, '\033[0;0m'
+        print('\t\033[36m data row', row, 'produces:\033[1m', result, '\033[0;0m')
 
 
 ### SAVE THE OUTPUT ###
 
 if function == 'c':
 
-    print '\n\t Writing', len(class_1), 'class 1 to disk'
+    print('\n\t Writing', len(class_1), 'class 1 to disk')
     target = open('class_1.csv', 'w'); target.close() # initialise class 1 .csv file
     with open('class_1.csv', 'a') as csv_file:
         target = csv.writer(csv_file, delimiter=',')
         #target.writerows([['IDs for class 1 (label 1)']])
         target.writerows([class_1])
 
-    print '\n\t Writing', len(class_0), 'class 0 to disk'
+    print('\n\t Writing', len(class_0), 'class 0 to disk')
     target = open('class_0.csv', 'w'); target.close() # initialise class 0 .csv file
     with open('class_0.csv', 'a') as csv_file:
         target = csv.writer(csv_file, delimiter=',')
@@ -170,7 +170,7 @@ if function == 'c':
 
 else:
 
-    print '\n\t Writing', len(class_1), 'output to disk'
+    print('\n\t Writing', len(class_1), 'output to disk')
     target = open('regress.csv', 'w'); target.close() # initialise regression file
     with open('regress.csv', 'a') as csv_file:
         target = csv.writer(csv_file, delimiter='\n')
