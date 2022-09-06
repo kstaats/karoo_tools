@@ -1,3 +1,6 @@
+# ignore generated sample_data files
+sample_data-*.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
